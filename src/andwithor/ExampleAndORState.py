@@ -5,11 +5,19 @@ from pydantic import BaseModel
 
 class LoggerState(BaseModel):
     results: List[str] = []
+    """
+    This is State of Logger Flow which is used to store the results of the flow.
+    logger is called again and again and it stores the results in the state.
+    """
     
 class ExampleAndOR(Flow[LoggerState]):
 
     @start()
     def start_method(self):
+        """
+        start_method is the first method of the flow.
+        as the @start() decorator is used to define the start method.
+        """
         print("---- Start Method ----")
         return "Welcome to Return Method of Start Method"
 
