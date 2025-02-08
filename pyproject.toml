@@ -14,8 +14,8 @@ dependencies = [
 
 [project.scripts]
 andwithor = "andwithor:main"
-withand = "andwithor.ExampleAndOR:kickoff"
-
+withoutstate = "andwithor.ExampleAndOR:kickoff"
+withstate = "andwithor.ExampleAndORState:kickoff"
 
 [build-system]
 requires = ["hatchling"]

@@ -3,11 +3,11 @@ from typing import Any, Dict, List
 from crewai.flow.flow import Flow, and_, listen, start, or_
 from pydantic import BaseModel
 
-# class LoggerState(BaseModel):
-#     results: List[str] = []
+class LoggerState(BaseModel):
+    results: List[str] = []
     
-class ExampleAndOR(Flow):
-    
+class ExampleAndOR(Flow[LoggerState]):
+
     @start()
     def start_method(self):
         print("---- Start Method ----")
@@ -31,13 +31,12 @@ class ExampleAndOR(Flow):
         print("---- Fourth Method ----")
         return "Welcome to Return Method of Fourth Method"
     
-    @listen(and_(start_method, second_method, third_method, fourth_method))
+    @listen(or_(start_method, second_method, third_method, fourth_method))
     def logger(self, *results):
-        list_results : List[str] = []
-        list_results.append(results)
+        self.state.results.extend(results)
         print("---- Logger ----")
-        print("Results:", list_results)
-        return list_results
+        print("Results:", self.state.results)
+        return self.state.results
         
 def kickoff():
     flow = ExampleAndOR()
